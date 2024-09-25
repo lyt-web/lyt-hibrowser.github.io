@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unique Visitor ID</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #visitorId {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Welcome to My Website</h1>
+<p>Your unique visitor ID is displayed below:</p>
+<div id="visitorId"></div>
+
+<script>
+    // Function to generate a unique visitor ID
+    function generateUniqueId() {
+        return 'id-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+    }
+
+    // Check if visitor ID exists in local storage
+    let visitorId = localStorage.getItem('visitorId');
+
+    // If it doesn't exist, generate a new one and store it in local storage
+    if (!visitorId) {
+        visitorId = generateUniqueId();
+        localStorage.setItem('visitorId', visitorId);
+    }
+
+    // Display the visitor ID
+    document.getElementById('visitorId').innerText = visitorId;
+</script>
+
+</body>
+</html>
