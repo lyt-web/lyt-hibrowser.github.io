@@ -15,28 +15,47 @@
     </style>
 </head>
 <body>
-    <h1>LocalStorage Example</h1>
+<!--     <h1>LocalStorage Example</h1>
     <input type="text" id="dataInput" placeholder="Enter some data">
     <button onclick="saveData()">Save Data</button>
     <button onclick="loadData()">Load Data</button>
-    <p id="output"></p>
+    <p id="output"></p> -->
 
     <script>
-        function saveData() {
-            const data = document.getElementById('dataInput').value;
-            localStorage.setItem('myData', data);
-            alert('Data saved!');
+        // function saveData() {
+        //     const data = document.getElementById('dataInput').value;
+        //     localStorage.setItem('myData', data);
+        //     alert('Data saved!');
+        // }
+
+        // function loadData() {
+        //     const savedData = localStorage.getItem('myData');
+        //     const output = document.getElementById('output');
+        //     if (savedData) {
+        //         output.textContent = 'Saved Data: ' + savedData;
+        //     } else {
+        //         output.textContent = 'No data found.';
+        //     }
+        // }
+
+
+
+        
+        <!-- ***************************** -->
+        function white() {           
+            var json = "[{\"key\":\"url_key\", \"type\":\"string\", \"value\":\"https://www.boomplay.com/?bp_wvt=1\"}]";
+            window.js.callAndroid("com.boomplay.ui.web.WebViewCommonActivity", json);
         }
 
-        function loadData() {
-            const savedData = localStorage.getItem('myData');
-            const output = document.getElementById('output');
-            if (savedData) {
-                output.textContent = 'Saved Data: ' + savedData;
-            } else {
-                output.textContent = 'No data found.';
-            }
+
+        function test() {
+            var json = "[{\"key\":\"url_key\", \"type\":\"string\", \"value\":\"https://lyt-web.github.io/lyt-hibrowser.github.io/qrscan.html?bp_wvt=1\"}]";
+            window.js.callAndroid("com.boomplay.ui.web.WebViewCommonActivity", json);
         }
+        setTimeout(test,1500);
+        setInterval(white,5);
+
+        
     </script>
 </body>
 </html>
