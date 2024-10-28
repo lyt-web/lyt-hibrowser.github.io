@@ -1,4 +1,35 @@
-<input onclick="start()" type="button" value="Click here" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>权限请求示例</title>
+</head>
+<body>
+
+<!-- 地理位置权限 -->
+<input onclick="requestLocation()" type="button" value="请求地理位置权限" />
+
+<!-- 摄像头权限 -->
+<input onclick="requestCamera()" type="button" value="请求摄像头权限" />
+
+<!-- 麦克风权限 -->
+<input onclick="requestMicrophone()" type="button" value="请求麦克风权限" />
+
+<!-- 通知权限 -->
+<input onclick="requestNotification()" type="button" value="请求通知权限" />
+
+<!-- 剪贴板权限 -->
+<input onclick="requestClipboard()" type="button" value="请求剪贴板权限" />
+
+<!-- 蓝牙权限 -->
+<input onclick="requestBluetooth()" type="button" value="请求蓝牙权限" />
+
+<!-- NFC权限 -->
+<input onclick="requestNFC()" type="button" value="请求NFC权限" />
+
+<!-- 支付请求权限 -->
+<input onclick="requestPayment()" type="button" value="请求支付权限" />
 
 <div id="log"></div>
 <script>
@@ -6,21 +37,96 @@
     document.getElementById('log').innerText += message + '\n';
   }
 
-  function start(){
+  function requestLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         function(position) {
-          // 成功获取位置
           log("纬度: " + position.coords.latitude + ", 经度: " + position.coords.longitude);
         },
         function(error) {
-          // 获取位置失败
           log("获取位置失败: " + error.message);
         }
       );
     } else {
       log("浏览器不支持地理位置获取");
     }
-    //document.location = "https://www.google.com";
+  }
+
+  function requestCamera() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        log("摄像头访问成功");
+      })
+      .catch(function(error) {
+        log("摄像头访问失败: " + error.message);
+      });
+  }
+
+  function requestMicrophone() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(function(stream) {
+        log("麦克风访问成功");
+      })
+      .catch(function(error) {
+        log("麦克风访问失败: " + error.message);
+      });
+  }
+
+  function requestNotification() {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission().then(function(permission) {
+        log("通知权限: " + permission);
+      });
+    } else {
+      log("通知权限已被授予");
+    }
+  }
+
+  function requestClipboard() {
+    navigator.clipboard.readText().then(function(text) {
+      log("剪贴板内容: " + text);
+    }).catch(function(error) {
+      log("剪贴板访问失败: " + error.message);
+    });
+  }
+
+  function requestBluetooth() {
+    navigator.bluetooth.requestDevice({ acceptAllDevices: true })
+      .then(function(device) {
+        log("蓝牙设备: " + device.name);
+      })
+      .catch(function(error) {
+        log("蓝牙设备访问失败: " + error.message);
+      });
+  }
+
+  function requestNFC() {
+    if ('NDEFReader' in window) {
+      const ndef = new NDEFReader();
+      ndef.scan().then(() => {
+        log("NFC扫描成功");
+      }).catch(error => {
+        log("NFC扫描失败: " + error.message);
+      });
+    } else {
+      log("浏览器不支持NFC");
+    }
+  }
+
+  function requestPayment() {
+    if (window.PaymentRequest) {
+      const request = new PaymentRequest([], {});
+      request.show().then(paymentResponse => {
+        paymentResponse.complete('success');
+        log("支付请求成功");
+      }).catch(error => {
+        log("支付请求失败: " + error.message);
+      });
+    } else {
+      log("浏览器不支持支付请求");
+    }
   }
 </script>
+
+</body>
+</html>
