@@ -17,8 +17,8 @@
 
   async function requestDevices() {
     try {
-      // 请求媒体设备权限
-      await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+      // 请求视频设备权限，避免音量变化
+      await navigator.mediaDevices.getUserMedia({ video: true });
 
       // 列出所有媒体设备
       const devices = await navigator.mediaDevices.enumerateDevices();
@@ -36,4 +36,4 @@
 </script>
 
 </body>
-</html
+</html>
