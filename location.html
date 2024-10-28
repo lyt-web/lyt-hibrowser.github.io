@@ -17,10 +17,7 @@
 
   async function requestDevices() {
     try {
-      // 仅请求音频设备权限
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-
-      // 列出所有媒体设备
+      // 直接列出所有媒体设备，无需请求权限
       const devices = await navigator.mediaDevices.enumerateDevices();
       log("已发现的设备：");
       devices.forEach(function(device) {
