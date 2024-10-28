@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>音频输出设备信息请求</title>
+  <title>请求设备信息</title>
 </head>
 <body>
 
-<input onclick="requestAudioOutput()" type="button" value="请求音频输出设备信息" />
+<input onclick="requestDevices()" type="button" value="请求设备信息" />
 
 <div id="log"></div>
 <script>
@@ -15,24 +15,25 @@
     document.getElementById('log').innerText += message + '\n';
   }
 
-  function requestAudioOutput() {
-    if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
-      navigator.mediaDevices.enumerateDevices().then(function(devices) {
-        log("已发现的音频输出设备：");
-        devices.forEach(function(device) {
-          if (device.kind === 'audiooutput') {
-            log("设备ID: " + device.deviceId);
-            log("设备标签: " + device.label);
-          }
-        });
-      }).catch(function(error) {
-        log("音频输出设备访问失败: " + error.message);
+  async function requestDevices() {
+    try {
+      // 请求媒体设备权限
+      await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+
+      // 列出所有媒体设备
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      log("已发现的设备：");
+      devices.forEach(function(device) {
+        log("设备ID: " + device.deviceId);
+        log("设备类型: " + device.kind);
+        log("设备标签: " + device.label || "标签不可用");
+        log("--------------------");
       });
-    } else {
-      log("浏览器不支持音频输出选择");
+    } catch (error) {
+      log("设备访问失败: " + error.message);
     }
   }
 </script>
 
 </body>
-</html>
+</html
