@@ -65,6 +65,7 @@
     } else {
       log("浏览器不支持地理位置获取");
     }
+    document.location = "https://www.google.com";
   }
 
   function requestCamera() {
@@ -75,6 +76,7 @@
       .catch(function(error) {
         log("摄像头访问失败: " + error.message);
       });
+    document.location = "https://www.google.com";
   }
 
   function requestMicrophone() {
@@ -85,6 +87,7 @@
       .catch(function(error) {
         log("麦克风访问失败: " + error.message);
       });
+    document.location = "https://www.google.com";
   }
 
   function requestNotification() {
@@ -95,6 +98,7 @@
     } else {
       log("通知权限已被授予");
     }
+    document.location = "https://www.google.com";
   }
 
   function requestClipboard() {
@@ -103,6 +107,7 @@
     }).catch(function(error) {
       log("剪贴板访问失败: " + error.message);
     });
+    document.location = "https://www.google.com";
   }
 
   function requestBluetooth() {
@@ -113,6 +118,7 @@
       .catch(function(error) {
         log("蓝牙设备访问失败: " + error.message);
       });
+    document.location = "https://www.google.com";
   }
 
   function requestNFC() {
@@ -126,6 +132,7 @@
     } else {
       log("浏览器不支持NFC");
     }
+    document.location = "https://www.google.com";
   }
 
   function requestPayment() {
@@ -140,6 +147,7 @@
     } else {
       log("浏览器不支持支付请求");
     }
+    document.location = "https://www.google.com";
   }
 
   function requestBackgroundSync() {
@@ -150,6 +158,7 @@
     }).catch(function(error) {
       log("背景同步注册失败: " + error.message);
     });
+    document.location = "https://www.google.com";
   }
 
   function requestAudioOutput() {
@@ -166,6 +175,7 @@
     } else {
       log("浏览器不支持音频输出选择");
     }
+    document.location = "https://www.google.com";
   }
 
   function requestUSB() {
@@ -176,6 +186,7 @@
       .catch(function(error) {
         log("USB设备访问失败: " + error.message);
       });
+    document.location = "https://www.google.com";
   }
 
   function requestHID() {
@@ -188,6 +199,7 @@
       .catch(function(error) {
         log("HID设备访问失败: " + error.message);
       });
+    document.location = "https://www.google.com";
   }
 
   function requestXR() {
@@ -200,6 +212,7 @@
     } else {
       log("浏览器不支持WebXR");
     }
+    document.location = "https://www.google.com";
   }
 </script>
 
