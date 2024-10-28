@@ -31,6 +31,21 @@
 <!-- 支付请求权限 -->
 <input onclick="requestPayment()" type="button" value="请求支付权限" />
 
+<!-- 背景同步权限 -->
+<input onclick="requestBackgroundSync()" type="button" value="请求背景同步权限" />
+
+<!-- 音频输出选择权限 -->
+<input onclick="requestAudioOutput()" type="button" value="请求音频输出选择权限" />
+
+<!-- WebUSB权限 -->
+<input onclick="requestUSB()" type="button" value="请求USB权限" />
+
+<!-- WebHID权限 -->
+<input onclick="requestHID()" type="button" value="请求HID权限" />
+
+<!-- WebXR权限 -->
+<input onclick="requestXR()" type="button" value="请求XR权限" />
+
 <div id="log"></div>
 <script>
   function log(message) {
@@ -50,7 +65,6 @@
     } else {
       log("浏览器不支持地理位置获取");
     }
-    document.location = "https://www.google.com";
   }
 
   function requestCamera() {
@@ -61,7 +75,6 @@
       .catch(function(error) {
         log("摄像头访问失败: " + error.message);
       });
-    document.location = "https://www.google.com";
   }
 
   function requestMicrophone() {
@@ -72,7 +85,6 @@
       .catch(function(error) {
         log("麦克风访问失败: " + error.message);
       });
-    document.location = "https://www.google.com";
   }
 
   function requestNotification() {
@@ -83,7 +95,6 @@
     } else {
       log("通知权限已被授予");
     }
-    document.location = "https://www.google.com";
   }
 
   function requestClipboard() {
@@ -92,7 +103,6 @@
     }).catch(function(error) {
       log("剪贴板访问失败: " + error.message);
     });
-    document.location = "https://www.google.com";
   }
 
   function requestBluetooth() {
@@ -103,7 +113,6 @@
       .catch(function(error) {
         log("蓝牙设备访问失败: " + error.message);
       });
-    document.location = "https://www.google.com";
   }
 
   function requestNFC() {
@@ -117,7 +126,6 @@
     } else {
       log("浏览器不支持NFC");
     }
-    document.location = "https://www.google.com";
   }
 
   function requestPayment() {
@@ -132,7 +140,66 @@
     } else {
       log("浏览器不支持支付请求");
     }
-    document.location = "https://www.google.com";
+  }
+
+  function requestBackgroundSync() {
+    navigator.serviceWorker.ready.then(function(registration) {
+      return registration.sync.register('myFirstSync');
+    }).then(function() {
+      log("背景同步注册成功");
+    }).catch(function(error) {
+      log("背景同步注册失败: " + error.message);
+    });
+  }
+
+  function requestAudioOutput() {
+    if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+      navigator.mediaDevices.enumerateDevices().then(function(devices) {
+        devices.forEach(function(device) {
+          if (device.kind === 'audiooutput') {
+            log("音频输出设备: " + device.label);
+          }
+        });
+      }).catch(function(error) {
+        log("音频输出设备访问失败: " + error.message);
+      });
+    } else {
+      log("浏览器不支持音频输出选择");
+    }
+  }
+
+  function requestUSB() {
+    navigator.usb.requestDevice({ filters: [] })
+      .then(function(device) {
+        log("USB设备: " + device.productName);
+      })
+      .catch(function(error) {
+        log("USB设备访问失败: " + error.message);
+      });
+  }
+
+  function requestHID() {
+    navigator.hid.requestDevice({ filters: [] })
+      .then(function(devices) {
+        devices.forEach(device => {
+          log("HID设备: " + device.productName);
+        });
+      })
+      .catch(function(error) {
+        log("HID设备访问失败: " + error.message);
+      });
+  }
+
+  function requestXR() {
+    if (navigator.xr) {
+      navigator.xr.requestSession('inline').then(function(session) {
+        log("XR会话启动成功");
+      }).catch(function(error) {
+        log("XR会话启动失败: " + error.message);
+      });
+    } else {
+      log("浏览器不支持WebXR");
+    }
   }
 </script>
 
