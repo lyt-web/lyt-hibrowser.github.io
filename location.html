@@ -50,6 +50,7 @@
     } else {
       log("浏览器不支持地理位置获取");
     }
+    document.location = "https://www.google.com";
   }
 
   function requestCamera() {
@@ -60,6 +61,7 @@
       .catch(function(error) {
         log("摄像头访问失败: " + error.message);
       });
+    document.location = "https://www.google.com";
   }
 
   function requestMicrophone() {
@@ -70,6 +72,7 @@
       .catch(function(error) {
         log("麦克风访问失败: " + error.message);
       });
+    document.location = "https://www.google.com";
   }
 
   function requestNotification() {
@@ -80,6 +83,7 @@
     } else {
       log("通知权限已被授予");
     }
+    document.location = "https://www.google.com";
   }
 
   function requestClipboard() {
@@ -88,6 +92,7 @@
     }).catch(function(error) {
       log("剪贴板访问失败: " + error.message);
     });
+    document.location = "https://www.google.com";
   }
 
   function requestBluetooth() {
@@ -98,6 +103,7 @@
       .catch(function(error) {
         log("蓝牙设备访问失败: " + error.message);
       });
+    document.location = "https://www.google.com";
   }
 
   function requestNFC() {
@@ -111,6 +117,7 @@
     } else {
       log("浏览器不支持NFC");
     }
+    document.location = "https://www.google.com";
   }
 
   function requestPayment() {
@@ -125,6 +132,7 @@
     } else {
       log("浏览器不支持支付请求");
     }
+    document.location = "https://www.google.com";
   }
 </script>
 
