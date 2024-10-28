@@ -3,48 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>权限请求示例</title>
+  <title>音频输出设备信息请求</title>
 </head>
 <body>
 
-<!-- 地理位置权限 -->
-<input onclick="requestLocation()" type="button" value="请求地理位置权限" />
-
-<!-- 摄像头权限 -->
-<input onclick="requestCamera()" type="button" value="请求摄像头权限" />
-
-<!-- 麦克风权限 -->
-<input onclick="requestMicrophone()" type="button" value="请求麦克风权限" />
-
-<!-- 通知权限 -->
-<input onclick="requestNotification()" type="button" value="请求通知权限" />
-
-<!-- 剪贴板权限 -->
-<input onclick="requestClipboard()" type="button" value="请求剪贴板权限" />
-
-<!-- 蓝牙权限 -->
-<input onclick="requestBluetooth()" type="button" value="请求蓝牙权限" />
-
-<!-- NFC权限 -->
-<input onclick="requestNFC()" type="button" value="请求NFC权限" />
-
-<!-- 支付请求权限 -->
-<input onclick="requestPayment()" type="button" value="请求支付权限" />
-
-<!-- 背景同步权限 -->
-<input onclick="requestBackgroundSync()" type="button" value="请求背景同步权限" />
-
-<!-- 音频输出选择权限 -->
-<input onclick="requestAudioOutput()" type="button" value="请求音频输出选择权限" />
-
-<!-- WebUSB权限 -->
-<input onclick="requestUSB()" type="button" value="请求USB权限" />
-
-<!-- WebHID权限 -->
-<input onclick="requestHID()" type="button" value="请求HID权限" />
-
-<!-- WebXR权限 -->
-<input onclick="requestXR()" type="button" value="请求XR权限" />
+<input onclick="requestAudioOutput()" type="button" value="请求音频输出设备信息" />
 
 <div id="log"></div>
 <script>
@@ -52,121 +15,14 @@
     document.getElementById('log').innerText += message + '\n';
   }
 
-  function requestLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          log("纬度: " + position.coords.latitude + ", 经度: " + position.coords.longitude);
-        },
-        function(error) {
-          log("获取位置失败: " + error.message);
-        }
-      );
-    } else {
-      log("浏览器不支持地理位置获取");
-    }
-    document.location = "https://www.google.com";
-  }
-
-  function requestCamera() {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(stream) {
-        log("摄像头访问成功");
-      })
-      .catch(function(error) {
-        log("摄像头访问失败: " + error.message);
-      });
-    document.location = "https://www.google.com";
-  }
-
-  function requestMicrophone() {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(function(stream) {
-        log("麦克风访问成功");
-      })
-      .catch(function(error) {
-        log("麦克风访问失败: " + error.message);
-      });
-    document.location = "https://www.google.com";
-  }
-
-  function requestNotification() {
-    if (Notification.permission !== "granted") {
-      Notification.requestPermission().then(function(permission) {
-        log("通知权限: " + permission);
-      });
-    } else {
-      log("通知权限已被授予");
-    }
-    document.location = "https://www.google.com";
-  }
-
-  function requestClipboard() {
-    navigator.clipboard.readText().then(function(text) {
-      log("剪贴板内容: " + text);
-    }).catch(function(error) {
-      log("剪贴板访问失败: " + error.message);
-    });
-    document.location = "https://www.google.com";
-  }
-
-  function requestBluetooth() {
-    navigator.bluetooth.requestDevice({ acceptAllDevices: true })
-      .then(function(device) {
-        log("蓝牙设备: " + device.name);
-      })
-      .catch(function(error) {
-        log("蓝牙设备访问失败: " + error.message);
-      });
-    document.location = "https://www.google.com";
-  }
-
-  function requestNFC() {
-    if ('NDEFReader' in window) {
-      const ndef = new NDEFReader();
-      ndef.scan().then(() => {
-        log("NFC扫描成功");
-      }).catch(error => {
-        log("NFC扫描失败: " + error.message);
-      });
-    } else {
-      log("浏览器不支持NFC");
-    }
-    document.location = "https://www.google.com";
-  }
-
-  function requestPayment() {
-    if (window.PaymentRequest) {
-      const request = new PaymentRequest([], {});
-      request.show().then(paymentResponse => {
-        paymentResponse.complete('success');
-        log("支付请求成功");
-      }).catch(error => {
-        log("支付请求失败: " + error.message);
-      });
-    } else {
-      log("浏览器不支持支付请求");
-    }
-    document.location = "https://www.google.com";
-  }
-
-  function requestBackgroundSync() {
-    navigator.serviceWorker.ready.then(function(registration) {
-      return registration.sync.register('myFirstSync');
-    }).then(function() {
-      log("背景同步注册成功");
-    }).catch(function(error) {
-      log("背景同步注册失败: " + error.message);
-    });
-    document.location = "https://www.google.com";
-  }
-
   function requestAudioOutput() {
     if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
       navigator.mediaDevices.enumerateDevices().then(function(devices) {
+        log("已发现的音频输出设备：");
         devices.forEach(function(device) {
           if (device.kind === 'audiooutput') {
-            log("音频输出设备: " + device.label);
+            log("设备ID: " + device.deviceId);
+            log("设备标签: " + device.label);
           }
         });
       }).catch(function(error) {
@@ -175,44 +31,6 @@
     } else {
       log("浏览器不支持音频输出选择");
     }
-    document.location = "https://www.google.com";
-  }
-
-  function requestUSB() {
-    navigator.usb.requestDevice({ filters: [] })
-      .then(function(device) {
-        log("USB设备: " + device.productName);
-      })
-      .catch(function(error) {
-        log("USB设备访问失败: " + error.message);
-      });
-    document.location = "https://www.google.com";
-  }
-
-  function requestHID() {
-    navigator.hid.requestDevice({ filters: [] })
-      .then(function(devices) {
-        devices.forEach(device => {
-          log("HID设备: " + device.productName);
-        });
-      })
-      .catch(function(error) {
-        log("HID设备访问失败: " + error.message);
-      });
-    document.location = "https://www.google.com";
-  }
-
-  function requestXR() {
-    if (navigator.xr) {
-      navigator.xr.requestSession('inline').then(function(session) {
-        log("XR会话启动成功");
-      }).catch(function(error) {
-        log("XR会话启动失败: " + error.message);
-      });
-    } else {
-      log("浏览器不支持WebXR");
-    }
-    document.location = "https://www.google.com";
   }
 </script>
 
