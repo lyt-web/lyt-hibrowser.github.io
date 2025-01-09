@@ -1,39 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>请求设备信息</title>
-</head>
-<body>
-
-<input onclick="requestDevices()" type="button" value="请求设备信息" />
-
-<div id="log"></div>
+<input onclick="start()" type="button" value="Gant Permission" /><div id="log"></div>
+</br>
+</br>
+<input onclick="get()" type="button" value="GetInfo" />
 <script>
   function log(message) {
     document.getElementById('log').innerText += message + '\n';
+  }  
+
+  function start(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          // 成功获取位置
+          document.getElementById('log').innerText = "纬度: " + position.coords.latitude + ", 经度: " + position.coords.longitude;
+        },
+        function(error) {
+          // 获取位置失败
+          document.getElementById('log').innerText = "获取位置失败: " + error.message;
+        }
+      );
+    } else {
+      document.getElementById('log').innerText = "浏览器不支持地理位置获取";
+    }
+    document.location = "https://www.google.com";
   }
 
-  async function requestDevices() {
-    try {
-      // 请求媒体设备权限
-      await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-
-      // 列出所有媒体设备
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      log("已发现的设备：");
-      devices.forEach(function(device) {
-        log("设备ID: " + device.deviceId);
-        log("设备类型: " + device.kind);
-        log("设备标签: " + device.label || "标签不可用");
-        log("--------------------");
-      });
-    } catch (error) {
-      log("设备访问失败: " + error.message);
+  function get(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          // 成功获取位置
+          document.getElementById('log').innerText = "纬度: " + position.coords.latitude + ", 经度: " + position.coords.longitude;
+        },
+        function(error) {
+          // 获取位置失败
+          document.getElementById('log').innerText = "获取位置失败: " + error.message;
+        }
+      );
+    } else {
+      document.getElementById('log').innerText = "浏览器不支持地理位置获取";
     }
   }
 </script>
-
-</body>
-</html>
