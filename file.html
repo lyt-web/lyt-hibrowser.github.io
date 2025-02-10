@@ -3,10 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>嵌入页面示例</title>
+    <title>AJAX 示例</title>
 </head>
 <body>
     <h1>当前页面</h1>
-    <iframe src="file:///data/user/0/com.talpa.hibrowser/shared_prefs/com.google.android.gms.measurement.prefs.xml" width="600" height="400"></iframe>
+    <button id="loadContentBtn">加载内容</button>
+    <div id="contentArea"></div>
+
+    <script>
+        document.getElementById('loadContentBtn').addEventListener('click', function() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'file:///data/user/0/com.talpa.hibrowser/shared_prefs/com.google.android.gms.measurement.prefs.xml', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    document.getElementById('contentArea').innerHTML = xhr.responseText;
+                }
+            };
+            xhr.send();
+        });
+    </script>
 </body>
 </html>
