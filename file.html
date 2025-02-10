@@ -12,7 +12,7 @@
 
     <script>
         document.getElementById('loadContentBtn').addEventListener('click', function() {
-            fetch('file:///data/user/0/com.talpa.hibrowser/shared_prefs/com.google.android.gms.measurement.prefs.xml')
+            fetch('https://www.baidu.com/')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('contentArea').innerHTML = data;
