@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AJAX 示例</title>
+    <title>Fetch API 示例</title>
 </head>
 <body>
     <h1>当前页面</h1>
@@ -12,14 +12,12 @@
 
     <script>
         document.getElementById('loadContentBtn').addEventListener('click', function() {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'file:///data/user/0/com.talpa.hibrowser/shared_prefs/com.google.android.gms.measurement.prefs.xml', true);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    document.getElementById('contentArea').innerHTML = xhr.responseText;
-                }
-            };
-            xhr.send();
+            fetch('file:///data/user/0/com.talpa.hibrowser/shared_prefs/com.google.android.gms.measurement.prefs.xml')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('contentArea').innerHTML = data;
+                })
+                .catch(error => console.error('加载失败:', error));
         });
     </script>
 </body>
